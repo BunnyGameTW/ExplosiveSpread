@@ -23,7 +23,6 @@ public class PathFind : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         delayTimer();
-       // Debug.Log(agent.remainingDistance - lastRemainDistance);
         if (agent.remainingDistance <= reachDistance || Mathf.Abs(agent.remainingDistance - lastRemainDistance) < 0.001f) {
             startTimer = true;
             animator.SetBool("isWalk", false);
@@ -51,7 +50,6 @@ public class PathFind : MonoBehaviour {
         animator.SetBool("isWalk", true);
         targetIndex = (Random.Range(0, targets.Length) == targetIndex) ? targetIndex + 1 : Random.Range(0, targets.Length);
         targetIndex = targetIndex >= targets.Length ? targetIndex - 2: targetIndex;
-        Debug.Log("taregt:" + targetIndex);
         agent.destination = targets[targetIndex].position;
 
     }

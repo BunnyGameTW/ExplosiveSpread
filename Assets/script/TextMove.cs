@@ -12,8 +12,6 @@ public class TextMove : MonoBehaviour {
     RectTransform rectTrans;
     // Use this for initialization
     void Start () {
-        ani = GetComponent<Animation>();
-        ani.clip = clips[randomAnimationIndex];
         GetComponent<Text>().color = colors[Random.Range(0, colors.Length)];
         rectTrans = GetComponent<RectTransform>();
     }
@@ -21,7 +19,12 @@ public class TextMove : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         rectTrans.anchoredPosition += new Vector2(-speed * Time.deltaTime, 0);
-        //transform.position += new Vector3(-speed * Time.deltaTime, 0, 0);
         if (rectTrans.anchoredPosition.x < -1920) Destroy(this.gameObject);
+    }
+    public void setAnimationType(int i)
+    {
+        randomAnimationIndex = i;
+        ani = GetComponent<Animation>();
+        ani.clip = clips[randomAnimationIndex];
     }
 }

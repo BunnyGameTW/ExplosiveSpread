@@ -15,20 +15,24 @@ public class TimeScaleButton : MonoBehaviour {
 	void Update () {
 		
 	}
-    public void onTimeScaleButtonClick()
+    public void onTimeScaleButtonClick(int i)
     {
-        if(speed == 1.0f)
-        {
-            speed = 1.5f;
-        }
-        else if (speed == 1.5f)
-        {
-            speed = 2.0f;
-        }
-        else if (speed == 2.0f)
-        {
-            speed = 1.0f;
-        }
-        text.text = "X" + speed.ToString();
+        //if(speed == 1.0f)
+        //{
+        //    speed = 1.5f;
+        //}
+        //else if (speed == 1.5f)
+        //{
+        //    speed = 2.0f;
+        //}
+        //else if (speed == 2.0f)
+        //{
+        //    speed = 1.0f;
+        //}
+        //text.text = "X" + speed.ToString();
+        if(i > 0)
+            OctoGameLoop.instance.timeManager.timeTurnFast();
+        else
+            OctoGameLoop.instance.timeManager.timeTurnSlow();
     }
 }

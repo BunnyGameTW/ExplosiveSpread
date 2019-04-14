@@ -68,6 +68,31 @@ public class PlayerSkill : MonoBehaviour {
             //數值做計算
             float result = updateSkillValue(skillIndex, skillMap);
 
+            if (str == "food")
+            {
+                AbilityScoreInstance.instance.SetFoodsScore(result);
+            }
+            else if (str == "drink")
+            {
+                AbilityScoreInstance.instance.SetDrinksScore(result);
+            }
+            else if (str == "cloth")
+            {
+                AbilityScoreInstance.instance.SetApparelsScore(result);
+            }
+            else if (str == "counter1")
+            {
+                AbilityScoreInstance.instance.SetCounterResisitancePointPrecent(result);//抗解藥研發速度
+            }
+            else if (str == "counter2")
+            {
+                AbilityScoreInstance.instance.SetCounterResisitanceScorePrecent(result);//抗關閉機場
+            }
+            else if (str == "counter3")
+            {
+                AbilityScoreInstance.instance.SetAreaSpreadAdditioanlPoint(result);//聚集經濟
+            }
+
             //// 派發事件
             //if (this.skillButtonClicked != null)
             //{
@@ -128,6 +153,7 @@ public class PlayerSkill : MonoBehaviour {
         if (i == 0) {//傳播類
             skillValueArray[i][j] = skillPointArray[i][j] * LEVEL_VALUE;
         }
+
         else//抗解藥
         {
             skillValueArray[i][j] = skillPointArray[i][j] * LEVEL_VALUE;//TODO

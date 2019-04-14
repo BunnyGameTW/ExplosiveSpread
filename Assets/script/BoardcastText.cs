@@ -5,26 +5,49 @@ using UnityEngine.UI;
 public class BoardcastText : MonoBehaviour {
     public string[] boardcastText;
     public GameObject textObject;
+    float timer = 0, boardCastTime = 0;
 	// Use this for initialization
 	void Start () {
-		for(int i = 1; i < 3; i++)
-        {
-            spawnBoardcastText(i);
-        }
+        randomTime();
+
+		//for(int i = 1; i < 3; i++)
+  //      {
+  //          spawnBoardcastText(i);
+  //      }
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        timer += Time.deltaTime;
+        if(timer > boardCastTime)
+        {
+            timer = 0;
+            randomTime();
+            spawnBoardcastText();
+        }
 
-    public void spawnBoardcastText(int i)//TODO 幹畫跟事件文字大小要分開
+    }
+    void randomTime()
+    {
+        boardCastTime = Random.Range(0.5f, 3.0f);
+    }
+    public void spawnBoardcastText()
+    {
+        spawnText(boardcastText[Random.Range(0,boardcastText.Length)], 35, 0);
+    }
+
+    public void spawnEventText(string str)
+    {
+        spawnText(str, 59, 1);
+    }
+    void spawnText(string str, int fontSize, int type)
     {
         Vector2 vec = new Vector2();
         vec.y = Random.Range(-530, 530);
         GameObject gameObejct = Instantiate(textObject, new Vector3(), new Quaternion(), this.transform);
-        gameObejct.GetComponentInChildren<Text>().text = boardcastText[i];
-        gameObejct.GetComponentInChildren<Text>().fontSize = 35;//TODO
+        gameObejct.GetComponentInChildren<Text>().text = str;
+        gameObejct.GetComponentInChildren<Text>().fontSize = fontSize;
         gameObejct.GetComponent<RectTransform>().anchoredPosition = vec;
+        gameObejct.GetComponentInChildren<TextMove>().setAnimationType(type);
     }
 }
