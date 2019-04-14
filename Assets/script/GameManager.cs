@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
-    public PlayerSkill playerSkill;
+    //public PlayerSkill playerSkill;
     public GameObject prefab;
     public Transform[] targets;
     public int person;
@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
       //  this.playerSkill.skillButtonClicked += this.OnPlayerSkillButtonClicked;
       for(int i = 1; i < person; i++)
         {
-            GameObject.Instantiate(prefab, targets[Random.Range(0, targets.Length)].position, new Quaternion());
+            Instantiate(prefab, targets[Random.Range(0, targets.Length)].position, new Quaternion());
         }
     }
 	

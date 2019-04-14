@@ -9,10 +9,14 @@ public class SkillButtonEventArgs : EventArgs
     public int skillPoint = 0;
 }
 public class PlayerSkill : MonoBehaviour {
+    float LEVEL_VALUE = 10.0f;//升等的加權值
+    
     int totalSkillPoint = 0;
     int usedSkillPoint = 0;
     int[][] skillPointArray;
+    float[][] skillValueArray;//點下去後座值的計算
     int skillIndex = 0;
+
     public Text skillPointText;
     public GameObject[] skillLabels;
     public event EventHandler<SkillButtonEventArgs> skillButtonClicked;
@@ -20,8 +24,11 @@ public class PlayerSkill : MonoBehaviour {
     // Use this for initialization
     void Start () {
         skillPointArray = new int[skillLabels.Length][];
-        for(int i = 0; i < skillPointArray.Length; i++) {
+        skillValueArray = new float[skillLabels.Length][];
+        for (int i = 0; i < skillPointArray.Length; i++) {
             skillPointArray[i] = new int[skillLabels[i].GetComponentsInChildren<Button>().Length];
+            skillValueArray[i] = new float[skillLabels[i].GetComponentsInChildren<Button>().Length];
+
             for (int j = 0; j < skillPointArray[i].Length; j++)
             {
                 skillLabels[i].GetComponentsInChildren<Button>()[j].GetComponentsInChildren<Text>()[1].text = "0";
@@ -58,14 +65,17 @@ public class PlayerSkill : MonoBehaviour {
             //更新view
             skillLabels[skillIndex].GetComponentsInChildren<Button>()[skillMap].GetComponentsInChildren<Text>()[1].text = skillPointArray[skillIndex][skillMap].ToString();
 
-            // 派發事件
-            if (this.skillButtonClicked != null)
-            {
-                SkillButtonEventArgs arg = new SkillButtonEventArgs();
-                arg.skillPoint = skillPointArray[skillIndex][skillMap];
-                arg.skillName = str;
-                this.skillButtonClicked(this, arg);
-            }
+            //數值做計算
+            float result = updateSkillValue(skillIndex, skillMap);
+
+            //// 派發事件
+            //if (this.skillButtonClicked != null)
+            //{
+            //    SkillButtonEventArgs arg = new SkillButtonEventArgs();
+            //    arg.skillPoint = skillPointArray[skillIndex][skillMap];
+            //    arg.skillName = str;
+            //    this.skillButtonClicked(this, arg);
+            //}
         }
         else
         {
@@ -111,5 +121,17 @@ public class PlayerSkill : MonoBehaviour {
             else
                 skillLabels[i].SetActive(false);
         }
+    }
+
+    float updateSkillValue(int i,int j)
+    {
+        if (i == 0) {//傳播類
+            skillValueArray[i][j] = skillPointArray[i][j] * LEVEL_VALUE;
+        }
+        else//抗解藥
+        {
+            skillValueArray[i][j] = skillPointArray[i][j] * LEVEL_VALUE;//TODO
+        }
+        return skillValueArray[i][j];
     }
 }
