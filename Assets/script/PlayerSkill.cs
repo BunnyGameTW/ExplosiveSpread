@@ -11,31 +11,34 @@ public class SkillButtonEventArgs : EventArgs
 public class PlayerSkill : MonoBehaviour {
     float LEVEL_VALUE = 10.0f;//升等的加權值
     
-    int totalSkillPoint = 0;
+    int totalMoney = 0;
     int usedSkillPoint = 0;
-    int[][] skillPointArray;
-    float[][] skillValueArray;//點下去後座值的計算
+    int[] skillPointArray;
+    int[] moneyMap;
+    float[] skillValueArray;//點下去後座值的計算
+
     int skillIndex = 0;
 
     public Text skillPointText;
-    public GameObject[] skillLabels;
+    public GameObject skills;
     public event EventHandler<SkillButtonEventArgs> skillButtonClicked;
 
     // Use this for initialization
     void Start () {
-        skillPointArray = new int[skillLabels.Length][];
-        skillValueArray = new float[skillLabels.Length][];
-        for (int i = 0; i < skillPointArray.Length; i++) {
-            skillPointArray[i] = new int[skillLabels[i].GetComponentsInChildren<Button>().Length];
-            skillValueArray[i] = new float[skillLabels[i].GetComponentsInChildren<Button>().Length];
+        moneyMap = new int[] { 10, 100, 500, 1000, 2000, 3000, 5000, 9999 };
+        skillPointArray = new int[skills.GetComponentsInChildren<Button>().Length];
+        skillValueArray = new float[skills.GetComponentsInChildren<Button>().Length];
 
-            for (int j = 0; j < skillPointArray[i].Length; j++)
-            {
-                skillLabels[i].GetComponentsInChildren<Button>()[j].GetComponentsInChildren<Text>()[1].text = "0";
-            }
+        
+        for (int i = 0; i < skillPointArray.Length; i++) {
+
+            skillPointArray[i] = 0;
+            skills.GetComponentsInChildren<Button>()[i].GetComponentsInChildren<Text>()[1].text = "0";// 設定技能點數
+            skills.GetComponentsInChildren<Button>()[i].GetComponentsInChildren<Text>()[3].text = "$" + howMuch(0).ToString();
+
         }
 
-        setTotalSkillPoint(10);
+        setMoney(999);
     }
 	
 	// Update is called once per frame
@@ -44,10 +47,10 @@ public class PlayerSkill : MonoBehaviour {
 	}
 
     //設定技能點
-    public void setTotalSkillPoint(int value)
+    public void setMoney(int value)
     {
-        totalSkillPoint = value;
-        skillPointText.text = usedSkillPoint.ToString() + "/" + value.ToString();
+        totalMoney = value;
+        skillPointText.text = value.ToString() + "根觸手";
 
     }
 
@@ -55,109 +58,60 @@ public class PlayerSkill : MonoBehaviour {
     //技能按鈕被按下 檢查是否有可用技能點 有責技能點-1 技能按鈕點數+1 發送事件更新按鈕數值
     public void onSkillButtonClicked(string str)
     {
-        if(usedSkillPoint < totalSkillPoint)
+        int skillIndex = strToNum(str);
+        int price = howMuch(skillPointArray[skillIndex]);
+        bool isEnough = true;
+        //call 
+        if (isEnough)
         {
-            usedSkillPoint++;
-            int skillMap = strToNum(str);
-            skillPointArray[skillIndex][skillMap]++;
-            skillPointText.text = usedSkillPoint.ToString() + "/" + totalSkillPoint.ToString();
+            skillPointArray[skillIndex]++;
+            skillPointText.text = totalMoney.ToString() + "根觸手";//更新view
+            skills.GetComponentsInChildren<Button>()[skillIndex].GetComponentsInChildren<Text>()[1].text = skillPointArray[skillIndex].ToString();
+            skills.GetComponentsInChildren<Button>()[skillIndex].GetComponentsInChildren<Text>()[3].text = "$" + howMuch(skillPointArray[skillIndex]).ToString();
 
-            //更新view
-            skillLabels[skillIndex].GetComponentsInChildren<Button>()[skillMap].GetComponentsInChildren<Text>()[1].text = skillPointArray[skillIndex][skillMap].ToString();
-
-            //數值做計算
-            float result = updateSkillValue(skillIndex, skillMap);
-
-            if (str == "food")
-            {
-                AbilityScoreInstance.instance.SetFoodsScore(result);
-            }
-            else if (str == "drink")
-            {
-                AbilityScoreInstance.instance.SetDrinksScore(result);
-            }
-            else if (str == "cloth")
-            {
-                AbilityScoreInstance.instance.SetApparelsScore(result);
-            }
-            else if (str == "counter1")
-            {
-                AbilityScoreInstance.instance.SetCounterResisitancePointPrecent(result);//抗解藥研發速度
-            }
-            else if (str == "counter2")
-            {
-                AbilityScoreInstance.instance.SetCounterResisitanceScorePrecent(result);//抗關閉機場
-            }
-            else if (str == "counter3")
-            {
-                AbilityScoreInstance.instance.SetAreaSpreadAdditioanlPoint(result);//聚集經濟
-            }
-
-            //// 派發事件
-            //if (this.skillButtonClicked != null)
+            //switch (str)
             //{
-            //    SkillButtonEventArgs arg = new SkillButtonEventArgs();
-            //    arg.skillPoint = skillPointArray[skillIndex][skillMap];
-            //    arg.skillName = str;
-            //    this.skillButtonClicked(this, arg);
+            //    case "food":
+            //        AbilityScoreInstance.instance.SetFoodsScore();
+            //        break;
+            //    case "drink":
+            //        AbilityScoreInstance.instance.SetDrinksScore();
+            //        break;
+            //    case "cloth":
+            //        AbilityScoreInstance.instance.SetApparelsScore();
+            //        break;
+            //    case "counter1":
+            //        AbilityScoreInstance.instance.SetCounterResisitancePointPrecent();
+            //        break;
+            //    case "counter2":
+            //        AbilityScoreInstance.instance.SetCounterResisitanceScorePrecent();
+            //        break;
+            //    case "counter3":
+            //        AbilityScoreInstance.instance.SetAreaSpreadAdditioanlPoint();
+            //        break;
             //}
+
         }
         else
         {
-            Debug.Log("沒有點數了");
+           // alertText.GetComponent<Animatior>().SetTrigger("alert");
         }
     }
-    int strToNum(string str)//同一類技能不要重複數字就行
+  
+    int howMuch(int levelIndex)
+    {
+        if (levelIndex >= moneyMap.Length) return moneyMap[moneyMap.Length-1];
+        else return moneyMap[levelIndex];
+    }
+    int strToNum(string str)//不要重複數字就行
     {
   
         if (str == "food") return 0;
         else if (str == "drink") return 1;
         else if (str == "cloth") return 2;
-        else if (str == "counter1") return 0;
-        else if (str == "counter2") return 1;
-        else if (str == "counter3") return 2;
+        else if (str == "counter1") return 3;
+        else if (str == "counter2") return 4;
+        else if (str == "counter3") return 5;
         return 999;
-    }
-
-    //切換技能分業
-    public void SwitchSkillLabel(string str)
-    {
-        if (str == "spread")
-        {
-            // 切到傳播類葉面
-            skillIndex = 0;
-            switchLabel();
-            
-        }
-        else
-        {
-            skillIndex = 1;
-            // 切到抗反擊葉面
-            switchLabel();
-        }
-    }
-
-    void switchLabel()
-    {
-        for (int i = 0; i < skillLabels.Length; i++)
-        {
-            if (skillIndex == i)
-                skillLabels[i].SetActive(true);
-            else
-                skillLabels[i].SetActive(false);
-        }
-    }
-
-    float updateSkillValue(int i,int j)
-    {
-        if (i == 0) {//傳播類
-            skillValueArray[i][j] = skillPointArray[i][j] * LEVEL_VALUE;
-        }
-
-        else//抗解藥
-        {
-            skillValueArray[i][j] = skillPointArray[i][j] * LEVEL_VALUE;//TODO
-        }
-        return skillValueArray[i][j];
     }
 }

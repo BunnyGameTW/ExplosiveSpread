@@ -9,14 +9,14 @@ public class OctoGameAlgorthm
     {
         int iLv = (int)lv + 1;
         float randNum = Random.Range(0.85f, 1.35f);
-        return Mathf.Pow(iLv,0.8f) * 100 * randNum;
+        return Mathf.Pow(iLv,0.7f) * 100 * randNum;
     }
 
     public static float GetAttackScore(OctoGameType.StoreLv lv)
     {
         int iLv = (int)lv + 1;
         float randNum = Random.Range(0.7f, 1.2f);
-        return Mathf.Pow(iLv, 0.8f) * 100 * randNum;
+        return Mathf.Pow(iLv, 0.7f) * 100 * randNum;
     }
 
 

@@ -12,6 +12,7 @@ public abstract class IStoreUtility : MonoBehaviour {
     protected OctoGameType.StoreType _storeType;
 
     public OctoGameType.StoreLv storeLv { get { return _storeLv; } }
+    [SerializeField]
     protected OctoGameType.StoreLv _storeLv;
 
 }

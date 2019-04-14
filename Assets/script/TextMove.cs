@@ -19,7 +19,7 @@ public class TextMove : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         rectTrans.anchoredPosition += new Vector2(-speed * Time.deltaTime, 0);
-        if (rectTrans.anchoredPosition.x < -1920) Destroy(this.gameObject);
+        if (rectTrans.anchoredPosition.x < -1920) Destroy (transform.parent.gameObject);
     }
     public void setAnimationType(int i)
     {

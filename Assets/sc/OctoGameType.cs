@@ -16,7 +16,8 @@ public class OctoGameType  {
     {
         Lv1,
         Lv2,
-        Lv3
+        Lv3,
+        Lv4
     }
 
     public struct GameEvent

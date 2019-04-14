@@ -43,7 +43,7 @@ public class ResisitanceManager  {
     public void SetResisitanceLv()
     {
         if (OctoGameLoop.instance.octoStoreManager.octoStoreSet.Count > (OctoGameLoop.instance.nonOctoStoreManager.totalStore * 0.9f)) {
-            if (!resisitanceLVOnceFlags[(int)ResisitanceLV.LV3])
+            if (!resisitanceLVOnceFlags[(int)ResisitanceLV.LV3 -1])
             {
                 resisitanceLV = ResisitanceLV.LV3;
                 resisitanceScore = MaxResisitanceScore;
@@ -56,7 +56,7 @@ public class ResisitanceManager  {
 
         else if (OctoGameLoop.instance.octoStoreManager.octoStoreSet.Count > (OctoGameLoop.instance.nonOctoStoreManager.totalStore * 0.7f)) {
 
-            if (!resisitanceLVOnceFlags[(int)ResisitanceLV.LV2])
+            if (!resisitanceLVOnceFlags[(int)ResisitanceLV.LV2 -1])
             {
                 resisitanceLV = ResisitanceLV.LV2;
                 resisitanceScore = MaxResisitanceScore * 0.6f;
@@ -70,7 +70,7 @@ public class ResisitanceManager  {
         }
         else if (OctoGameLoop.instance.octoStoreManager.octoStoreSet.Count > (OctoGameLoop.instance.nonOctoStoreManager.totalStore * 0.4f)) {
 
-            if (!resisitanceLVOnceFlags[(int)ResisitanceLV.LV1])
+            if (!resisitanceLVOnceFlags[(int)ResisitanceLV.LV1 - 1])
             {
                 resisitanceLV = ResisitanceLV.LV1;
                 resisitanceScore = MaxResisitanceScore * 0.2f;

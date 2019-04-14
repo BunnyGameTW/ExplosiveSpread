@@ -18,8 +18,8 @@ public class TimeManager : MonoBehaviour {
 
     public void Init()
     {
-        //   timeSpeed = TimeSpeed.speedX1;
         currentTimeScale = 1;
+        timeSpeed = TimeSpeed.speedX1;
     }
 
     public void OnUpdate()
@@ -32,11 +32,9 @@ public class TimeManager : MonoBehaviour {
         if (timeSpeed == TimeSpeed.speedX2)
             timeSpeed = TimeSpeed.speedX2;
         else {
-
-            timeSpeed++;// = (TimeSpeed)((int)timeSpeed++);
-        
+            timeSpeed++;
         }
-        
+
         currentTimeScale = getSpeed(timeSpeed);
     }
 
@@ -46,7 +44,7 @@ public class TimeManager : MonoBehaviour {
             timeSpeed = TimeSpeed.speedX075;
         else
         {
-            timeSpeed--;// = (TimeSpeed)(timeSpeed--);
+            timeSpeed--;
         }
 
         currentTimeScale = getSpeed(timeSpeed);

@@ -13,7 +13,12 @@ public class OctoStoreManager {
 
     public void CreateNewOctoStore(IStoreUtility origonalStore)
     {
-        GameObject g = Object.Instantiate(OctoGameLoop.instance.OctoStorePrefab, origonalStore.transform.position, origonalStore.transform.rotation);
+        GameObject g;
+        if (origonalStore.storeLv < OctoGameType.StoreLv.Lv2)
+            g = Object.Instantiate(OctoGameLoop.instance.OctoStorePrefab, origonalStore.transform.position, origonalStore.transform.rotation);
+        else
+            g = Object.Instantiate(OctoGameLoop.instance.OctoStorePrefab_big, origonalStore.transform.position, origonalStore.transform.rotation);
+
         g.transform.localScale = origonalStore.transform.localScale;
         OctoStore newStore = g.GetComponent<OctoStore>();
         newStore.Init(OctoGameType.StoreType.Octo, origonalStore.storeLv);

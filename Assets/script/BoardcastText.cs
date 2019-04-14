@@ -43,7 +43,7 @@ public class BoardcastText : MonoBehaviour {
     void spawnText(string str, int fontSize, int type)
     {
         Vector2 vec = new Vector2();
-        vec.y = Random.Range(-530, 530);
+        vec.y = Random.Range(-500, 500);
         GameObject gameObejct = Instantiate(textObject, new Vector3(), new Quaternion(), this.transform);
         gameObejct.GetComponentInChildren<Text>().text = str;
         gameObejct.GetComponentInChildren<Text>().fontSize = fontSize;
