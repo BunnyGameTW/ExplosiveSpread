@@ -51,7 +51,7 @@ public class PathFind : MonoBehaviour {
         animator.SetBool("isWalk", true);
         targetIndex = (Random.Range(0, targets.Length) == targetIndex) ? targetIndex + 1 : Random.Range(0, targets.Length);
         targetIndex = targetIndex >= targets.Length ? targetIndex - 2: targetIndex;
-      //  Debug.Log("taregt:" + targetIndex);
+        Debug.Log("taregt:" + targetIndex);
         agent.destination = targets[targetIndex].position;
 
     }
