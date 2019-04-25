@@ -44,7 +44,7 @@ public class PathFind : MonoBehaviour {
             }
         }
     }
-    // 到達之後就往某個地方轉向 放個特效?
+    // 到達之後就往某個地方轉向
     void findTarget()
     {
         animator.SetBool("isWalk", true);

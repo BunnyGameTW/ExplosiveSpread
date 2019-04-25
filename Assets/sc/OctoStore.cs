@@ -36,6 +36,13 @@ public class OctoStore : IStoreUtility {
     {
         areaSpread.OnUpdate();
     }
+    public void deathAnimation()
+    {
+        this.gameObject.AddComponent<DeathAnimation>();
+        transform.GetChild(2).gameObject.SetActive(false);
+        transform.GetChild(3).gameObject.SetActive(true);
+    }
+
 
    
 }

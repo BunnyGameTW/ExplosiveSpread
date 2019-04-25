@@ -8,7 +8,7 @@ public class GameEventManager : MonoBehaviour {
     public bool bGameStart;
 
     List<OctoGameType.GameEvent> gameEventSet;
-
+    BoardcastText boardcastText;
     int eventCount;
 
     public void Init()
@@ -28,6 +28,7 @@ public class GameEventManager : MonoBehaviour {
         //gameEventSet.Add(GameEventData.ResisitanceStartEventLv3);
 
         eventCount = 1;
+        boardcastText = FindObjectOfType<BoardcastText>();
     }
 
     public void GameStart(NonOctoStore oldstore)
@@ -57,7 +58,8 @@ public class GameEventManager : MonoBehaviour {
                 int rand = Random.Range(0, gameEventSet.Count);
 
                 //send event
-                Debug.Log(gameEventSet[rand].showText);
+              
+                boardcastText.spawnEventText(gameEventSet[rand].showText);
                 AbilityScoreInstance.instance.SetStoreResisitanceScore(gameEventSet[rand].affectStoreType, gameEventSet[rand].affectScore);
                 
                 gameEventSet.Remove(gameEventSet[rand]);

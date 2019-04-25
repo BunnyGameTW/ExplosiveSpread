@@ -12,11 +12,11 @@ public class AreaSpreadFlyweight  {
 
     public static float GetSpreadMaxRange(OctoGameType.StoreLv lv)
     {
-        return Mathf.Pow(((int)lv + 1), 0.35f) * spreadMaxRangeDF; 
+        return Mathf.Pow(((int)lv + 1), 0.8f) * spreadMaxRangeDF; 
     }
 
     public static float GetMaxEffectPower(OctoGameType.StoreLv lv)
     {
-        return Mathf.Pow(((int)lv + 1), 0.6f) * 50;
+        return Mathf.Pow(((int)lv + 1), 0.5f) * 50;
     }
 }

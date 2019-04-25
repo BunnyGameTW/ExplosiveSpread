@@ -20,24 +20,17 @@ public class NonOctoStoreManager  {
             GameObject g;
             if (randI == 1)
             {
-                if (f.storeLv <= OctoGameType.StoreLv.Lv2)
-                {
-                    Debug.Log("small:" + f.storeLv);
-
+                if(f.storeLv <= OctoGameType.StoreLv.Lv2)
                     g = spwnStore(OctoGameLoop.instance.FoodsStorePrefab, f);
-                }
                 else
-                {
-                    Debug.Log("big:" + f.storeLv);
                     g = spwnStore(OctoGameLoop.instance.FoodsStorePrefab_big, f);
-                }
 
                 octoStore = g.GetComponent<NonOctoStore>();
                 octoStore.Init(OctoGameType.StoreType.Foods, f.storeLv);
             }
             else if (randI == 2)
             {
-                if (f.storeLv < OctoGameType.StoreLv.Lv2)
+                if (f.storeLv <= OctoGameType.StoreLv.Lv2)
                     g = spwnStore(OctoGameLoop.instance.DrinksStorePrefab, f);
                 else
                     g = spwnStore(OctoGameLoop.instance.DrinksStorePrefab_big, f);
@@ -48,7 +41,7 @@ public class NonOctoStoreManager  {
             }
             else
             {
-                if (f.storeLv < OctoGameType.StoreLv.Lv2)
+                if (f.storeLv <= OctoGameType.StoreLv.Lv2)
                     g = spwnStore(OctoGameLoop.instance.ApparelsStorePrefab, f);
                 else
                     g = spwnStore(OctoGameLoop.instance.ApparelsStorePrefab_big, f);

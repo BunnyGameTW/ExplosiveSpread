@@ -14,7 +14,7 @@ public class OctoStoreManager {
     public void CreateNewOctoStore(IStoreUtility origonalStore)
     {
         GameObject g;
-        if (origonalStore.storeLv < OctoGameType.StoreLv.Lv2)
+        if (origonalStore.storeLv <= OctoGameType.StoreLv.Lv2)
             g = Object.Instantiate(OctoGameLoop.instance.OctoStorePrefab, origonalStore.transform.position, origonalStore.transform.rotation);
         else
             g = Object.Instantiate(OctoGameLoop.instance.OctoStorePrefab_big, origonalStore.transform.position, origonalStore.transform.rotation);
@@ -28,8 +28,14 @@ public class OctoStoreManager {
                                          //通知 ResisitanceManager 計算是否開始抵制章魚燒店
         OctoGameLoop.instance.resisitanceManager.SetResisitanceLv();
 
-        Debug.Log(origonalStore.gameObject.name  + "LV:" + ((int)origonalStore.storeLv + 1) + "被章魚燒併購了" );
+        //Debug.Log(origonalStore.gameObject.name  + "LV:" + ((int)origonalStore.storeLv + 1) + "被章魚燒併購了" );
 
+    }
+
+    public float GetTotalOctoStoreInPrecent()
+    {
+        return (octoStoreSet.Count / (float)OctoGameLoop.instance.nonOctoStoreManager.totalStore);
+       
     }
 
 }

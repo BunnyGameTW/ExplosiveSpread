@@ -16,9 +16,15 @@ public class OctoGameLoop : MonoBehaviour {
     [HideInInspector]
     public GameEventManager gameEventManager;
 
+    [HideInInspector]
+    public SkillPointManager skillPointManager;
+   
+    [HideInInspector]
+    public TimeManager timeManager;
+
+    [HideInInspector]
     public static OctoGameLoop instance;
 
-    public TimeManager timeManager;
 
     // set up in inspector
     public GameObject FoodsStorePrefab_big;
@@ -31,6 +37,7 @@ public class OctoGameLoop : MonoBehaviour {
     public GameObject DrinksStorePrefab;
     public GameObject ApparelsStorePrefab;
 
+    public bool isWin = false;
     private void Awake()
     {
         instance = this;
@@ -46,10 +53,14 @@ public class OctoGameLoop : MonoBehaviour {
 
         timeManager = gameObject.AddComponent<TimeManager>();
         timeManager.Init();
+
+        skillPointManager = gameObject.AddComponent<SkillPointManager>();
+        skillPointManager.Init();
     }
 	
 	void Update ()
     {
+        if (OctoGameLoop.instance.resisitanceManager.IsGameOver() || OctoGameLoop.instance.isWin) return;
         occupyComputer.OnUpdate();
 
         gameEventManager.OnUpdate();
@@ -57,5 +68,7 @@ public class OctoGameLoop : MonoBehaviour {
         resisitanceManager.OnUpdate();
 
         timeManager.OnUpdate();
+
+        skillPointManager.OnUpdate();
     }
 }

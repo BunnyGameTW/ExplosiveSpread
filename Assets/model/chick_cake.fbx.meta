@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 232aba0300411214f848048c92ffe24a
-timeCreated: 1555211952
+timeCreated: 1555814905
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -11,7 +11,17 @@ ModelImporter:
     2300000: //RootNode
     3300000: //RootNode
     4300000: Plane002
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 01 - Default
+    second: {fileID: 2100000, guid: 9e4b0bc29ffdf9547b035bbbaa4e48e0, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: chick_cake
+    second: {fileID: 2800000, guid: 33c928754b3987c40ad1344a8734d2c7, type: 3}
   materials:
     importMaterials: 1
     materialName: 0

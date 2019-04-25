@@ -26,7 +26,8 @@ public class OccupyComputer {
 
                 Vector2 pos = new Vector2(nonOctoStore.gameObject.transform.position.x, nonOctoStore.gameObject.transform.position.z);
                 float finalAttackScore = store.GetAreaSpreadAddition(pos) + AbilityScoreInstance.instance.GetTotalScore() 
-                    + AbilityScoreInstance.instance.GetNonOctoStoreScore(nonOctoStore.storeType) - OctoGameLoop.instance.resisitanceManager.GetResisitanceScore() 
+                    + AbilityScoreInstance.instance.GetNonOctoStoreScore(nonOctoStore.storeType) 
+                    - OctoGameLoop.instance.resisitanceManager.GetResisitanceScore()  
                     - AbilityScoreInstance.instance.GetStoreResisitanceScore(nonOctoStore.storeType);
 
                 if (finalAttackScore > nonOctoStore.defendScore)

@@ -18,13 +18,24 @@ public class TextMove : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        rectTrans.anchoredPosition += new Vector2(-speed * Time.deltaTime, 0);
-        if (rectTrans.anchoredPosition.x < -1920) Destroy (transform.parent.gameObject);
+        if (randomAnimationIndex == 0)
+        {
+            rectTrans.anchoredPosition += new Vector2(-speed * Time.unscaledDeltaTime, 0);
+        }
+        else
+        {
+            rectTrans.anchoredPosition += new Vector2(-speed * Time.deltaTime, 0);
+        }
+        if (rectTrans.anchoredPosition.x < -19999) Destroy (transform.parent.gameObject);
     }
     public void setAnimationType(int i)
     {
         randomAnimationIndex = i;
-        ani = GetComponent<Animation>();
-        ani.clip = clips[randomAnimationIndex];
+        speed = i == 0 ? speed / 2 : speed;
+        //ani = GetComponent<Animation>();
+
+        //ani.clip = clips[randomAnimationIndex];
+        //ani.Play();
+        if(i == 0)GetComponent<Animator>().SetBool("isEvent", true);
     }
 }

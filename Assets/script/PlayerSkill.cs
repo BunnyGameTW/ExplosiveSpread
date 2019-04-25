@@ -22,79 +22,84 @@ public class PlayerSkill : MonoBehaviour {
     public Text skillPointText;
     public GameObject skills;
     public event EventHandler<SkillButtonEventArgs> skillButtonClicked;
-
+    AudioSource audio;
     // Use this for initialization
     void Start () {
-        moneyMap = new int[] { 10, 100, 500, 1000, 2000, 3000, 5000, 9999 };
+        moneyMap = new int[] { 15, 100, 300, 800, 1200, 1800, 2100, 2500, 2800, 3000};
         skillPointArray = new int[skills.GetComponentsInChildren<Button>().Length];
         skillValueArray = new float[skills.GetComponentsInChildren<Button>().Length];
+        audio = GetComponent<AudioSource>();
 
-        
+
         for (int i = 0; i < skillPointArray.Length; i++) {
 
             skillPointArray[i] = 0;
-            skills.GetComponentsInChildren<Button>()[i].GetComponentsInChildren<Text>()[1].text = "0";// 設定技能點數
-            skills.GetComponentsInChildren<Button>()[i].GetComponentsInChildren<Text>()[3].text = "$" + howMuch(0).ToString();
-
+            skills.GetComponentsInChildren<Button>()[i].GetComponentsInChildren<Text>()[0].text = "0";// 設定技能點數
+            skills.GetComponentsInChildren<Button>()[i].GetComponentsInChildren<Text>()[1].text = howMuch(0).ToString();
+            skills.GetComponentsInChildren<Button>()[i].transform.GetChild(1).gameObject.SetActive(false);
         }
 
-        setMoney(999);
+        setMoney((int)OctoGameLoop.instance.skillPointManager.GetTotalMoney());
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        setMoney((int)OctoGameLoop.instance.skillPointManager.GetTotalMoney());
+    }
 
     //設定技能點
     public void setMoney(int value)
     {
         totalMoney = value;
-        skillPointText.text = value.ToString() + "根觸手";
+        skillPointText.text = value.ToString();
 
     }
 
 
-    //技能按鈕被按下 檢查是否有可用技能點 有責技能點-1 技能按鈕點數+1 發送事件更新按鈕數值
+    //技能按鈕被按下
     public void onSkillButtonClicked(string str)
     {
         int skillIndex = strToNum(str);
         int price = howMuch(skillPointArray[skillIndex]);
-        bool isEnough = true;
+        
+        bool isEnough = false;
+        switch (str)
+        {
+            case "food":
+                isEnough = OctoGameLoop.instance.skillPointManager.TryAddFoodsScore(price);
+                break;
+            case "drink":
+                isEnough = OctoGameLoop.instance.skillPointManager.TryAddDrinksScore(price);
+                break;
+            case "cloth":
+                isEnough = OctoGameLoop.instance.skillPointManager.TryAddApparelsScore(price);
+                break;
+            case "counter1":
+                isEnough = OctoGameLoop.instance.skillPointManager.TryAddTotalScore(price);
+                break;
+            case "counter2":
+                isEnough = OctoGameLoop.instance.skillPointManager.TryAddCounterResisitancePointPrecent(price);
+                break;
+            case "counter3":
+                isEnough = OctoGameLoop.instance.skillPointManager.TryAddAreaSpreadAdditioanlPoint(price);
+                break;
+            case "counter4":
+                isEnough = OctoGameLoop.instance.skillPointManager.TryAddCounterResisitanceScorePrecent(price);
+                break;
+        }
         //call 
         if (isEnough)
         {
+            setMoney((int)OctoGameLoop.instance.skillPointManager.GetTotalMoney());
             skillPointArray[skillIndex]++;
-            skillPointText.text = totalMoney.ToString() + "根觸手";//更新view
-            skills.GetComponentsInChildren<Button>()[skillIndex].GetComponentsInChildren<Text>()[1].text = skillPointArray[skillIndex].ToString();
-            skills.GetComponentsInChildren<Button>()[skillIndex].GetComponentsInChildren<Text>()[3].text = "$" + howMuch(skillPointArray[skillIndex]).ToString();
-
-            //switch (str)
-            //{
-            //    case "food":
-            //        AbilityScoreInstance.instance.SetFoodsScore();
-            //        break;
-            //    case "drink":
-            //        AbilityScoreInstance.instance.SetDrinksScore();
-            //        break;
-            //    case "cloth":
-            //        AbilityScoreInstance.instance.SetApparelsScore();
-            //        break;
-            //    case "counter1":
-            //        AbilityScoreInstance.instance.SetCounterResisitancePointPrecent();
-            //        break;
-            //    case "counter2":
-            //        AbilityScoreInstance.instance.SetCounterResisitanceScorePrecent();
-            //        break;
-            //    case "counter3":
-            //        AbilityScoreInstance.instance.SetAreaSpreadAdditioanlPoint();
-            //        break;
-            //}
-
+            skillPointText.text = totalMoney.ToString();//更新view
+            skills.GetComponentsInChildren<Button>()[skillIndex].GetComponentsInChildren<Text>()[0].text = skillPointArray[skillIndex].ToString();
+            skills.GetComponentsInChildren<Button>()[skillIndex].GetComponentsInChildren<Text>()[1].text = howMuch(skillPointArray[skillIndex]).ToString();
         }
         else
         {
-           // alertText.GetComponent<Animatior>().SetTrigger("alert");
+           
+            audio.Play();
         }
     }
   
@@ -112,6 +117,7 @@ public class PlayerSkill : MonoBehaviour {
         else if (str == "counter1") return 3;
         else if (str == "counter2") return 4;
         else if (str == "counter3") return 5;
+        else if (str == "counter4") return 6;
         return 999;
     }
 }

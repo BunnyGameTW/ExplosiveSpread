@@ -46,10 +46,8 @@ public class CameraControl : MonoBehaviour {
         else if (Input.GetMouseButtonUp(0))
             isPress = false;
 
-       // Vector3 vec = transform.forward * moveSpeed *Time.deltaTime;
-        //float offset = (lastMousePosition - Input.mousePosition).;
-        if (isPress) transform.position += new Vector3((-Input.mousePosition.x + lastMousePosition.x) * moveSpeed * Time.deltaTime, 0, (-Input.mousePosition.y + lastMousePosition.y) * moveSpeed * Time.deltaTime);
-
+        Vector3 vec = Vector3.Normalize(lastMousePosition - Input.mousePosition);
+        if (isPress) transform.position += new Vector3(vec.x * moveSpeed * Time.unscaledDeltaTime, 0, vec.y * moveSpeed * Time.unscaledDeltaTime);
         lastMousePosition = Input.mousePosition;
 
         if (Input.GetMouseButtonDown(1))
@@ -58,8 +56,8 @@ public class CameraControl : MonoBehaviour {
             isRotate = false;
         if(isRotate)
         {
-            x += Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
-            y -= Input.GetAxis("Mouse Y") * rotateSpeed * Time.deltaTime; //+ 90;
+            x += Input.GetAxis("Mouse X") * rotateSpeed * Time.unscaledDeltaTime;
+            y -= Input.GetAxis("Mouse Y") * rotateSpeed * Time.unscaledDeltaTime; //+ 90;
          //   print("y" + y);
             if (x > 360) x -= 360;
             else if (x < 0) x += 360;

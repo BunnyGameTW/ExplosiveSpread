@@ -1,24 +1,16 @@
 fileFormatVersion: 2
-guid: e12b59869f54dcb4a8b94ef23359e21f
-timeCreated: 1555213968
+guid: 0f5f99dc8f96fe6439a419d6eb34cdab
+timeCreated: 1555826064
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: Cylinder001
-    100002: //RootNode
-    100004: Plane002
-    400000: Cylinder001
-    400002: //RootNode
-    400004: Plane002
-    2100000: chick_cake
-    2100002: maderla
-    2300000: Cylinder001
-    2300002: Plane002
-    3300000: Cylinder001
-    3300002: Plane002
-    4300000: Plane002
-    4300002: Cylinder001
+    100000: //RootNode
+    400000: //RootNode
+    2100000: maderla
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cylinder001
   externalObjects: {}
   materials:
     importMaterials: 1

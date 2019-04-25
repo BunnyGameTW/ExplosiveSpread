@@ -21,16 +21,16 @@ public class AbilityScoreInstance: MonoBehaviour {
     float apparelsResisitanceScore;
 
     [SerializeField]
-    [Range(0, 0.7f)]
+    [Range(0, 0.75f)]
     float counterResisitanceScorePrecent;
     
   
     [SerializeField]
-    [Range(0, 0.7f)]
+    [Range(0, 0.85f)]
     float counterResisitancePointPrecent;
 
     [SerializeField]
-    [Range(0, 150f)]
+    [Range(0, 180f)]
     float areaSpreadAdditioanlPoint;
 
     public float GetTotalScore() { return totalScore; }
@@ -90,27 +90,27 @@ public class AbilityScoreInstance: MonoBehaviour {
     public void SetDrinksScore(float f) { drinksScore += f; }
     public void SetApparelsScore(float f) { apparelsScore += f; }
     
-    //max 70%
+    //max 75%
     public void SetCounterResisitanceScorePrecent(float f) {
         counterResisitanceScorePrecent += f;
-        if (counterResisitanceScorePrecent > 0.7f)
-            counterResisitanceScorePrecent = 0.7f;
+        if (counterResisitanceScorePrecent > 0.75f)
+            counterResisitanceScorePrecent = 0.75f;
     }
 
-    //max 70%
+    //max 85%
     public void SetCounterResisitancePointPrecent(float f) {
         counterResisitancePointPrecent += f;
-        if (counterResisitancePointPrecent > 0.7f)
-            counterResisitancePointPrecent = 0.7f;
+        if (counterResisitancePointPrecent > 0.85f)
+            counterResisitancePointPrecent = 0.85f;
     }
 
 
-    // max 150
+    // max 180
     public void SetAreaSpreadAdditioanlPoint(float f)
     {
         areaSpreadAdditioanlPoint += f;
-        if (areaSpreadAdditioanlPoint > 150)
-            areaSpreadAdditioanlPoint = 150;
+        if (areaSpreadAdditioanlPoint > 180)
+            areaSpreadAdditioanlPoint = 180;
     }
 
 
@@ -129,5 +129,15 @@ public class AbilityScoreInstance: MonoBehaviour {
         else
             Debug.Log("worong type");
     }
+
+
+    private void Update()
+    {
+        print(OctoGameLoop.instance.resisitanceManager.IsGameOver());
+        if (OctoGameLoop.instance.resisitanceManager.IsGameOver()) return;
+        if (OctoGameLoop.instance.gameEventManager.bGameStart)
+            totalScore += Time.deltaTime * 0.25f;
+        
+    } 
 
 }

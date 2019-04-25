@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DeathAnimation : MonoBehaviour {
-    public GameObject g;
+   // public GameObject effect;
 
 	// Use this for initialization
 	void Start () {
@@ -17,7 +17,7 @@ public class DeathAnimation : MonoBehaviour {
 	}
     public void playDeathAnimation()
     {
-        Instantiate(g, transform);
+      //  Instantiate(effect, transform);
         Rigidbody rb = gameObject.AddComponent<Rigidbody>();
         rb.AddForce(new Vector3(0, Random.Range(2, 3) * 10), ForceMode.Impulse);
         rb.angularVelocity = new Vector3(100, 100, 100);
